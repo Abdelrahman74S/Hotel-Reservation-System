@@ -2,7 +2,19 @@
 
 {% block content %}
 <div class="container mx-auto mt-20 p-4">    
-    <h1 class="text-3xl font-bold mb-4">Welcome to My Website</h1>
+    <h1 class="text-3xl font-bold mb-4">Welcome to My Website, {{ name }}!</h1>
+    
     <p class="text-lg">This is the home page. Use the navigation bar to explore the site.</p>
+    
+    <div class="mt-6">
+        <h2 class="text-xl font-semibold">Our Items List:</h2>
+        <ul class="list-disc list-inside mt-2 text-gray-700">
+            {% for item in items %}
+                <li>{{ item }}</li>
+            {% empty %}
+                <li>No items found.</li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
 {% endblock %}

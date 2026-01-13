@@ -7,7 +7,9 @@ from django.contrib.auth import  login , logout
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.views.generic import TemplateView
 # Create your views here.
 class UserRegisterView(CreateView):
     model = User
@@ -54,5 +56,20 @@ def home_view(request):
         'name': 'World',
         'items': ['apple', 'banana', 'cherry']
     }
-    # The render() function loads the template and passes the context
     return render(request, 'home.html', context)
+
+
+class ChangePasswordView(LoginRequiredMixin, TemplateView):
+    template_name = 'accounts/change_password.html'
+    
+    def get(self, request, *args, **kwargs):
+        form = PasswordChangeForm(request.user)
+        return self.render_to_response({'form': form})
+    
+    def post(self, request, *args, **kwargs):
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect('profile') 
+        return render(request, self.template_name, {'form': form})
