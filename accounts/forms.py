@@ -23,6 +23,7 @@ class UserRegisterForm(UserCreationForm):
             'address',
             'date_of_birth',
             'User_picture', 
+            'user_type',
             'password1',
             'password2'
         ]
