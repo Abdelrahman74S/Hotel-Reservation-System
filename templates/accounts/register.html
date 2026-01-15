@@ -32,6 +32,15 @@
             </div>
 
             <div class="mb-4">
+                <label for="user_type" class="block text-gray-700 font-semibold mb-2">Account Type</label>
+                <select id="user_type" name="user_type" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                    <option value="G">Guest</option>
+                    <option value="M">Manager</option>
+                </select>
+                <p class="text-red-500 text-sm mt-1">{{ form.user_type.errors.0 }}</p>
+            </div>
+
+            <div class="mb-4">
                 <label for="date_of_birth" class="block text-gray-700 font-semibold mb-2">Date of Birth</label>
                 <input type="date" id="date_of_birth" name="date_of_birth" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
