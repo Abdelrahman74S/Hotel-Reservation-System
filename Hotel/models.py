@@ -10,7 +10,7 @@ class Hotel(models.Model):
     address = models.TextField()
     description = models.TextField()
     website = models.URLField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:

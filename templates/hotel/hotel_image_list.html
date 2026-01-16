@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-6xl mx-auto py-10 px-4">
+    <div class="flex justify-between items-center mb-10">
+        <div>
+            <h1 class="text-3xl font-black text-gray-900">Hotel Gallery</h1>
+            <p class="text-gray-500 mt-1">Manage all uploaded images for your properties.</p>
+        </div>
+        <a href="{% url 'hotel_image_create' %}" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-200 transition">+ Upload Image</a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {% for img in hotel_images %}
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group">
+                <div class="relative h-48">
+                    <img src="{{ img.image.url }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    {% if img.is_primary %}
+                        <span class="absolute top-3 left-3 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-tighter">Primary</span>
+                    {% endif %}
+                </div>
+                <div class="p-4">
+                    <p class="text-sm font-bold text-gray-900 truncate">{{ img.hotel.name }}</p>
+                    <div class="mt-4 flex justify-between items-center border-t pt-3">
+                        <span class="text-[10px] text-gray-400 font-bold uppercase">{{ img.uploaded_at|date }}</span>
+                        <div class="flex gap-3">
+                            <a href="{% url 'hotel_image_delete' img.pk %}" class="text-red-500 hover:text-red-700 transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-span-full py-20 text-center bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
+                <p class="text-gray-400 font-medium">No images uploaded yet.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
