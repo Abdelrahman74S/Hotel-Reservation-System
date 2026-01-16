@@ -16,11 +16,42 @@ from .forms import (
 )
 from .Permissions import ManagerRequiredMixin
 
+from django.forms import inlineformset_factory
+from .models import Hotel, HotelImage
+
+HotelImageFormSet = inlineformset_factory(
+    Hotel, HotelImage, 
+    fields=('image', 'is_primary'), 
+    extra=3,
+    can_delete=False
+)
+
 class HotelCreateView(ManagerRequiredMixin, CreateView):
     model = Hotel
     form_class = HotelForm
     template_name = "hotel/hotel_form.html"
     success_url = reverse_lazy("hotel_list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['image_formset'] = HotelImageFormSet(self.request.POST, self.request.FILES)
+        else:
+            context['image_formset'] = HotelImageFormSet()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        image_formset = context['image_formset']
+        
+        self.object = form.save()
+        
+        if image_formset.is_valid():
+            image_formset.instance = self.object
+            image_formset.save()
+            return super().form_valid(form)
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
 
 
 class HotelListView(ListView):
@@ -29,8 +60,7 @@ class HotelListView(ListView):
     context_object_name = "hotels"
 
     def get_queryset(self):
-        return Hotel.objects.all().prefetch_related("images")
-
+        return Hotel.objects.all().prefetch_related("images").order_by("-id")
 
 class HotelDetailView(DetailView):
     model = Hotel
