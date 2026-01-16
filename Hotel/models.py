@@ -1,13 +1,27 @@
 from django.db import models
+from django.utils.text import slugify
+from django.urls import reverse
 import uuid
 
 class Hotel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True)
     address = models.TextField()
     description = models.TextField()
     website = models.URLField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def primary_image(self):
+        return self.images.filter(is_primary=True).first()
+
+    def get_absolute_url(self):
+        return reverse('hotel_detail', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.name
@@ -17,9 +31,18 @@ class HotelImage(models.Model):
     image = models.ImageField(upload_to='hotel_images/')
     is_primary = models.BooleanField(default=False) 
     uploaded_at = models.DateTimeField(auto_now_add=True)
+    
+    def save(self, *args, **kwargs):
+        if self.is_primary:
+            HotelImage.objects.filter(hotel=self.hotel, is_primary=True).update(is_primary=False)
+        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ['-is_primary', 'uploaded_at']
+
+    def __str__(self):
+        return f"Image for {self.hotel.name}"
+
 
 class RoomFeature(models.Model):
     name = models.CharField(max_length=100, unique=True)
