@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto py-10 px-4">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">Management Dashboard</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <p class="text-gray-500 text-sm font-bold uppercase tracking-wider">Hotels</p>
+            <p class="text-3xl font-bold text-gray-900 mt-1">Manage All</p>
+            <a href="{% url 'hotel_list' %}" class="text-blue-600 text-sm font-bold mt-4 block hover:underline">View List →</a>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <p class="text-gray-500 text-sm font-bold uppercase tracking-wider">Rooms</p>
+            <p class="text-3xl font-bold text-gray-900 mt-1">Inventory</p>
+            <a href="{% url 'room_list' %}" class="text-blue-600 text-sm font-bold mt-4 block hover:underline">View All Rooms →</a>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <p class="text-gray-500 text-sm font-bold uppercase tracking-wider">Categories</p>
+            <p class="text-3xl font-bold text-gray-900 mt-1">Room Types</p>
+            <a href="{% url 'roomcategory_list' %}" class="text-blue-600 text-sm font-bold mt-4 block hover:underline">Manage Categories →</a>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <p class="text-gray-500 text-sm font-bold uppercase tracking-wider">System</p>
+            <p class="text-3xl font-bold text-gray-900 mt-1">Features</p>
+            <a href="{% url 'roomfeature_list' %}" class="text-blue-600 text-sm font-bold mt-4 block hover:underline">Room Features →</a>
+        </div>
+    </div>
+
+    <div class="bg-blue-600 rounded-3xl p-10 text-white flex flex-col md:flex-row justify-between items-center shadow-lg shadow-blue-200">
+        <div class="text-center md:text-left mb-6 md:mb-0">
+            <h2 class="text-2xl font-bold">Ready to expand?</h2>
+            <p class="text-blue-100 mt-2">Add a new hotel location to your StayEase network.</p>
+        </div>
+        <a href="{% url 'hotel_create' %}" class="bg-white text-blue-600 px-8 py-4 rounded-2xl font-bold shadow-xl hover:bg-gray-50 transition active:scale-95 text-lg">
+            Create New Hotel
+        </a>
+    </div>
+</div>
+{% endblock %}

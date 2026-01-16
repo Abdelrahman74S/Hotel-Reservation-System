@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="min-h-[50vh] flex items-center justify-center p-4">
+    <div class="bg-white max-w-md w-full p-8 rounded-2xl shadow-2xl text-center border border-gray-100">
+        <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">Delete Room?</h2>
+        <p class="text-gray-500 mb-8">Are you sure you want to delete <span class="font-bold text-gray-800">Room {{ room.room_number }}</span>? This will remove it from the system.</p>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <div class="flex gap-4">
+                <button type="submit" class="flex-1 bg-red-600 text-white py-3 rounded-xl font-bold hover:bg-red-700 transition active:scale-95">Yes, Delete</button>
+                <a href="{% url 'room_list' %}" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-xl font-bold hover:bg-gray-200 transition">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

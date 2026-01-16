@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold mb-8">Room Categories</h1>
+    <div class="overflow-x-auto bg-white rounded-2xl shadow">
+        <table class="w-full text-left">
+            <thead class="bg-gray-50 border-b">
+                <tr>
+                    <th class="p-4 font-bold text-gray-700">Category Title</th>
+                    <th class="p-4 font-bold text-gray-700">Hotel</th>
+                    <th class="p-4 font-bold text-gray-700">Base Price</th>
+                    <th class="p-4 font-bold text-gray-700">Capacity</th>
+                    <th class="p-4 font-bold text-gray-700">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in room_categories %}
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="p-4 font-medium">{{ category.title }}</td>
+                    <td class="p-4 text-gray-600">{{ category.hotel.name }}</td>
+                    <td class="p-4 text-blue-600 font-bold">${{ category.base_price }}</td>
+                    <td class="p-4">{{ category.capacity_adults }}A / {{ category.capacity_child }}C</td>
+                    <td class="p-4">
+                        <a href="{% url 'room_category_update' category.pk %}" class="text-blue-600 hover:underline mr-2">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto py-10 px-4">
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+        <div class="relative group">
+            <img src="{{ hotel_image.image.url }}" class="w-full h-auto max-h-[600px] object-contain bg-gray-900" alt="Hotel Image">
+            {% if hotel_image.is_primary %}
+                <span class="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">Primary Image</span>
+            {% endif %}
+        </div>
+        
+        <div class="p-6 flex justify-between items-center bg-gray-50">
+            <div>
+                <h2 class="text-lg font-bold text-gray-900">Hotel: {{ hotel_image.hotel.name }}</h2>
+                <p class="text-sm text-gray-500">Uploaded on: {{ hotel_image.uploaded_at|date }}</p>
+            </div>
+            <div class="flex gap-3">
+                <a href="{% url 'hotel_image_update' hotel_image.pk %}" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-100 transition">Edit</a>
+                <a href="{% url 'hotel_image_list' %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition">Back to Gallery</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

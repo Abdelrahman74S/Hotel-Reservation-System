@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto py-20 px-4">
+    <div class="bg-white rounded-3xl shadow-xl p-10 text-center border border-gray-100">
+        <div class="w-24 h-24 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border border-blue-100">
+            <i class="{{ room_feature.icon|default:'fas fa-tag' }}"></i>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ room_feature.name }}</h1>
+        <p class="text-gray-500 max-w-md mx-auto mb-10">This feature is currently used in <span class="text-blue-600 font-bold">{{ room_feature.categories.count }}</span> different room categories.</p>
+        
+        <div class="flex gap-4 max-w-xs mx-auto">
+            <a href="{% url 'roomfeature_update' room_feature.pk %}" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-xl font-bold hover:bg-gray-200 transition">Edit</a>
+            <a href="{% url 'roomfeature_list' %}" class="flex-1 bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition">Done</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-10">
+    <div class="bg-white shadow rounded-2xl overflow-hidden">
+        <div class="p-8 border-b border-gray-100 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900">{{ room_category.title }}</h1>
+                <p class="text-blue-600 font-semibold mt-1">Hotel: {{ room_category.hotel.name }}</p>
+            </div>
+            <div class="text-right">
+                <p class="text-3xl font-bold text-gray-900">${{ room_category.base_price }}</p>
+                <p class="text-sm text-gray-500">Base Price / Night</p>
+            </div>
+        </div>
+        
+        <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <h3 class="font-bold text-lg mb-4 text-gray-800">Description</h3>
+                <p class="text-gray-600 leading-relaxed">{{ room_category.description }}</p>
+                
+                <h3 class="font-bold text-lg mt-6 mb-4 text-gray-800">Capacity</h3>
+                <ul class="space-y-2 text-gray-600">
+                    <li>大人 (Adults): {{ room_category.capacity_adults }}</li>
+                    <li>子供 (Children): {{ room_category.capacity_child }}</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="font-bold text-lg mb-4 text-gray-800">Features</h3>
+                <div class="flex flex-wrap gap-2">
+                    {% for feature in room_category.features.all %}
+                        <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium border border-blue-100">
+                            {{ feature.name }}
+                        </span>
+                    {% empty %}
+                        <p class="text-gray-400 italic">No features listed.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

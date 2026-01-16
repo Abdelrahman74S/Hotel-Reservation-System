@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto py-10">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-2xl font-bold text-gray-900">Room Features</h1>
+        <a href="{% url 'roomfeature_create' %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">+ New Feature</a>
+    </div>
+    <div class="bg-white rounded-xl shadow overflow-hidden">
+        {% for feature in room_features %}
+            <div class="flex justify-between items-center p-4 border-b last:border-0 hover:bg-gray-50">
+                <div class="flex items-center">
+                    <span class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="{{ feature.icon|default:'fas fa-tag' }}"></i>
+                    </span>
+                    <span class="font-medium">{{ feature.name }}</span>
+                </div>
+                <div class="space-x-4">
+                    <a href="{% url 'roomfeature_update' feature.pk %}" class="text-blue-600">Edit</a>
+                    <a href="{% url 'roomfeature_delete' feature.pk %}" class="text-red-600">Delete</a>
+                </div>
+            </div>
+        {% empty %}
+            <p class="p-8 text-center text-gray-500">No features created yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
